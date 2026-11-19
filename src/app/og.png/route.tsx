@@ -1,13 +1,14 @@
+/**
+ * /og.png: ảnh xem trước chung khi chia sẻ link (trang không có ảnh riêng).
+ * Dùng route có đuôi .png thay cho file opengraph-image: trang bật trailingSlash nên địa chỉ không đuôi
+ * bị chuyển hướng sang ".../" và Vercel trả về sai loại file, Facebook/Zalo có thể không hiện ảnh.
+ */
 import { SKILLS } from '@/data/skills';
-import { OG_SIZE, ogImage } from '@/lib/og';
+import { ogImage } from '@/lib/og';
 
 export const dynamic = 'force-static';
-export const alt = 'Kho Skill: danh mục AI Skills tiếng Việt';
-export const size = OG_SIZE;
-export const contentType = 'image/png';
 
-/** Ảnh xem trước chung, dùng cho mọi trang không có ảnh riêng. */
-export default function Image() {
+export function GET() {
   return ogImage({
     tag: `${SKILLS.length} skill`,
     title: 'Danh mục AI Skills tiếng Việt',

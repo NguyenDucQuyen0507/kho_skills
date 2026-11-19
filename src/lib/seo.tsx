@@ -1,6 +1,6 @@
 /**
  * SEO dùng chung: metadata từng trang (canonical, Open Graph) và dữ liệu có cấu trúc JSON-LD.
- * Ảnh xem trước do các file opengraph-image.tsx tạo lúc build.
+ * Ảnh xem trước do các route og.png tạo lúc build.
  */
 import type { Metadata } from 'next';
 import { SITE_NAME, SITE_URL } from '@/data/site';
@@ -13,12 +13,12 @@ export function pageMeta({
   title,
   description,
   path,
-  image = '/opengraph-image',
+  image = '/og.png',
 }: {
   title?: string;
   description: string;
   path: string;
-  /** Ảnh xem trước; mặc định là ảnh chung (src/app/opengraph-image.tsx). */
+  /** Ảnh xem trước; mặc định là ảnh chung (src/app/og.png/route.tsx). */
   image?: string;
 }): Metadata {
   const fullTitle = title ? `${title} · ${SITE_NAME}` : `${SITE_NAME}: danh mục AI Skills tiếng Việt`;

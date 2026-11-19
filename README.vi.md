@@ -38,7 +38,7 @@ Vì máy chủ GitHub cũng commit vào `main`, nhớ `git pull` trước khi l�
 
 - `/sitemap.xml` và `/robots.txt` tạo lúc build (`src/app/sitemap.ts`, `src/app/robots.ts`).
 - Mỗi trang có canonical và thẻ Open Graph qua `pageMeta()` trong `src/lib/seo.tsx`; trang skill và bộ skill có dữ liệu có cấu trúc JSON-LD.
-- Ảnh xem trước khi chia sẻ link: ảnh chung (`src/app/opengraph-image.tsx`) và mỗi skill một ảnh (`src/app/skills/[slug]/opengraph-image.tsx`), font Be Vietnam Pro (OFL) trong `src/assets/fonts`.
+- Ảnh xem trước khi chia sẻ link: ảnh chung `/og.png` (`src/app/og.png/route.tsx`) và mỗi skill một ảnh `/skills/<slug>/og.png`, font Be Vietnam Pro (OFL) trong `src/assets/fonts`.
 - Đổi tên miền: sửa `SITE_URL` trong `src/data/site.ts`.
 
 ## Chọn skill cho dự án (trang /goi-y/)

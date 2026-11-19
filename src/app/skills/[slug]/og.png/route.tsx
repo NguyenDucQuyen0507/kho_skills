@@ -1,19 +1,18 @@
+/** /skills/<slug>/og.png: ảnh xem trước riêng cho mỗi skill (tên, mô tả ngắn, nhóm, số sao). Xem src/app/og.png/route.tsx. */
 import { SKILLS, categoryOf } from '@/data/skills';
 import { formatStars, isSharedRepo, starsOf } from '@/data/stars';
-import { OG_SIZE, clip, ogImage } from '@/lib/og';
+import { clip, ogImage } from '@/lib/og';
 
-export const alt = 'Skill trên Kho Skill';
-export const size = OG_SIZE;
-export const contentType = 'image/png';
+export const dynamic = 'force-static';
 
 export function generateStaticParams() {
   return SKILLS.map((s) => ({ slug: s.slug }));
 }
 
-/** Ảnh xem trước riêng cho mỗi skill: tên, mô tả ngắn, nhóm, số sao. */
-export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const skill = SKILLS.find((s) => s.slug === slug)!;
+  const skill = SKILLS.find((s) => s.slug === slug);
+  if (!skill) return new Response('Not found', { status: 404 });
   const stars = starsOf(skill);
   const foot =
     skill.source === 'official'

@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: `${skill.title} (${skill.name})`,
     description: skill.summary,
     path: `/skills/${skill.slug}/`,
-    image: `/skills/${skill.slug}/opengraph-image`, // tạo bởi opengraph-image.tsx cùng thư mục
+    image: `/skills/${skill.slug}/og.png`, // tạo bởi og.png/route.tsx cùng thư mục
   });
 }
 
