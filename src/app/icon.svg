@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Icon Kho Skill: nền màu --accent (#2563eb), ký hiệu ⌘ trắng giống .logo-mark trên đầu trang.
+       Hình ⌘ dựa theo icon "command" của bộ Lucide (giấy phép ISC). -->
+  <rect width="32" height="32" rx="8" fill="#2563eb"/>
+  <path d="M19 10v12a3 3 0 1 0 3-3H10a3 3 0 1 0 3 3V10a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"
+        fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

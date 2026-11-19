@@ -1,0 +1,189 @@
+{
+  "fetchedAt": "2026-11-18T09:34:45.796Z",
+  "repos": {
+    "anthropics/skills": {
+      "stars": 196949,
+      "pushedAt": "2026-11-16T14:22:50Z"
+    },
+    "michalparkola/tapestry-skills-for-claude-code": {
+      "stars": 584,
+      "pushedAt": "2026-03-11T22:36:51Z"
+    },
+    "obra/superpowers": {
+      "stars": 319630,
+      "pushedAt": "2026-11-03T23:24:58Z"
+    },
+    "lackeyjb/playwright-skill": {
+      "stars": 3304,
+      "pushedAt": "2026-11-01T07:36:27Z"
+    },
+    "expo/skills": {
+      "stars": 4185,
+      "pushedAt": "2026-11-18T09:04:23Z"
+    },
+    "conorluddy/ios-simulator-skill": {
+      "stars": 1330,
+      "pushedAt": "2026-11-08T15:21:32Z"
+    },
+    "zxkane/aws-skills": {
+      "stars": 379,
+      "pushedAt": "2026-06-15T14:37:32Z"
+    },
+    "zarazhangrui/frontend-slides": {
+      "stars": 32512,
+      "pushedAt": "2026-06-23T20:08:19Z"
+    },
+    "nextlevelbuilder/ui-ux-pro-max-skill": {
+      "stars": 151096,
+      "pushedAt": "2026-11-18T07:17:25Z"
+    },
+    "alonw0/web-asset-generator": {
+      "stars": 542,
+      "pushedAt": "2026-01-28T09:11:01Z"
+    },
+    "chrisvoncsefalvay/claude-d3js-skill": {
+      "stars": 255,
+      "pushedAt": "2025-10-18T02:29:55Z"
+    },
+    "coffeefuelbump/csv-data-summarizer-claude-skill": {
+      "stars": 486,
+      "pushedAt": "2025-10-16T20:20:06Z"
+    },
+    "K-Dense-AI/scientific-agent-skills": {
+      "stars": 57643,
+      "pushedAt": "2026-11-16T09:19:25Z"
+    },
+    "trailofbits/skills": {
+      "stars": 8266,
+      "pushedAt": "2026-11-12T17:48:51Z"
+    },
+    "morluto/rea": {
+      "stars": 467137,
+      "pushedAt": "2026-11-18T09:12:22Z"
+    },
+    "yusufkaraaslan/Skill_Seekers": {
+      "stars": 15334,
+      "pushedAt": "2026-11-16T12:58:52Z"
+    },
+    "smerchek/claude-epub-skill": {
+      "stars": 173,
+      "pushedAt": "2025-10-18T00:40:32Z"
+    },
+    "mattpocock/skills": {
+      "stars": 327055,
+      "pushedAt": "2026-11-17T11:53:34Z"
+    },
+    "addyosmani/agent-skills": {
+      "stars": 118775,
+      "pushedAt": "2026-11-14T04:33:56Z"
+    },
+    "wshobson/agents": {
+      "stars": 42645,
+      "pushedAt": "2026-11-16T01:08:59Z"
+    },
+    "JuliusBrussee/caveman": {
+      "stars": 121165,
+      "pushedAt": "2026-11-18T07:28:33Z"
+    },
+    "Jeffallan/claude-skills": {
+      "stars": 12433,
+      "pushedAt": "2026-11-16T17:30:27Z"
+    },
+    "pbakaus/impeccable": {
+      "stars": 112518,
+      "pushedAt": "2026-11-18T07:12:18Z"
+    },
+    "Leonxlnx/taste-skill": {
+      "stars": 118042,
+      "pushedAt": "2026-11-08T21:51:50Z"
+    },
+    "emilkowalski/skills": {
+      "stars": 57883,
+      "pushedAt": "2026-11-15T12:42:50Z"
+    },
+    "tt-a1i/archify": {
+      "stars": 97606,
+      "pushedAt": "2026-11-18T06:29:23Z"
+    },
+    "cathrynlavery/diagram-design": {
+      "stars": 68050,
+      "pushedAt": "2026-11-12T21:14:19Z"
+    },
+    "thedotmack/claude-mem": {
+      "stars": 118095,
+      "pushedAt": "2026-11-18T05:00:37Z"
+    },
+    "OthmanAdi/planning-with-files": {
+      "stars": 28120,
+      "pushedAt": "2026-11-11T20:55:30Z"
+    },
+    "mex-memory/mex": {
+      "stars": 1796,
+      "pushedAt": "2026-11-18T09:10:40Z"
+    },
+    "virgiliojr94/book-to-skill": {
+      "stars": 38338,
+      "pushedAt": "2026-11-08T21:22:31Z"
+    },
+    "nidhinjs/prompt-master": {
+      "stars": 16120,
+      "pushedAt": "2026-10-22T13:26:18Z"
+    },
+    "rebelytics/one-skill-to-rule-them-all": {
+      "stars": 3960,
+      "pushedAt": "2026-11-16T15:45:50Z"
+    },
+    "NVIDIA/SkillSpector": {
+      "stars": 26701,
+      "pushedAt": "2026-11-18T09:02:14Z"
+    },
+    "elementalsouls/Claude-BugHunter": {
+      "stars": 10160,
+      "pushedAt": "2026-11-17T13:33:22Z"
+    },
+    "ljagiello/ctf-skills": {
+      "stars": 3737,
+      "pushedAt": "2026-11-15T03:04:21Z"
+    },
+    "Orchestra-Research/AI-Research-SKILLs": {
+      "stars": 14636,
+      "pushedAt": "2026-10-11T02:56:34Z"
+    },
+    "Weizhena/Deep-Research-skills": {
+      "stars": 2575,
+      "pushedAt": "2026-08-23T03:25:28Z"
+    },
+    "ScrapeCreators/social-media-research-skills": {
+      "stars": 6677,
+      "pushedAt": "2026-08-26T17:26:01Z"
+    },
+    "googleworkspace/cli": {
+      "stars": 32378,
+      "pushedAt": "2026-11-03T01:37:22Z"
+    },
+    "obsidianmd/obsidian-skills": {
+      "stars": 53123,
+      "pushedAt": "2026-11-17T22:37:17Z"
+    },
+    "microsoft/power-platform-skills": {
+      "stars": 1162,
+      "pushedAt": "2026-11-18T06:21:51Z"
+    },
+    "blader/humanizer": {
+      "stars": 70561,
+      "pushedAt": "2026-11-10T01:35:15Z"
+    },
+    "coreyhaines31/marketingskills": {
+      "stars": 61116,
+      "pushedAt": "2026-11-18T01:16:17Z"
+    },
+    "phuryn/pm-skills": {
+      "stars": 28128,
+      "pushedAt": "2026-11-08T23:10:04Z"
+    },
+    "sergebulaev/linkedin-skills": {
+      "stars": 6015,
+      "pushedAt": "2026-11-17T11:05:26Z"
+    }
+  }
+}
