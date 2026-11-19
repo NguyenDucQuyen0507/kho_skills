@@ -6,7 +6,7 @@ A Vietnamese-language catalog of **AI Skills** (`SKILL.md` packages) for Claude 
 
 *Kho Skill* means "skill warehouse" in Vietnamese. The site itself is in Vietnamese because that is its audience. This README is in English for anyone reviewing the code.
 
-> Live site: _coming soon_
+> Live site: **https://kho-skills.vercel.app**
 
 ## Why
 

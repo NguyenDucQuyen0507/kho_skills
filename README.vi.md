@@ -2,6 +2,8 @@
 
 [English](README.md) · **Tiếng Việt**
 
+Trang web: **https://kho-skills.vercel.app**
+
 Danh mục **AI Skills (SKILL.md)** cho Claude và các AI agent, mô tả bằng tiếng Việt, kèm cách cài và giấy phép đã kiểm tra.
 
 - 67 mục: 19 skill chính thức của Anthropic, 46 mục cộng đồng, 2 skill Kho Skill tự viết (session-handoff, khoi-dong-du-an)
