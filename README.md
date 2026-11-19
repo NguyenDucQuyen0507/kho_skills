@@ -1,90 +1,88 @@
 # Kho Skill
 
-Danh mục **AI Skills (SKILL.md)** cho Claude và các AI agent, mô tả bằng tiếng Việt, kèm cách cài và giấy phép đã kiểm tra.
+**English** · [Tiếng Việt](README.vi.md)
 
-- 67 mục: 19 skill chính thức của Anthropic, 46 mục cộng đồng, 2 skill Kho Skill tự viết (session-handoff, khoi-dong-du-an)
-- Tìm kiếm không dấu, lọc theo nhóm và nguồn
-- Mỗi skill có trang riêng (tốt cho SEO): khi nào dùng, lệnh cài (nút sao chép), giấy phép, link GitHub
-- Trang hướng dẫn "Skill là gì?"
-- Xuất ra trang tĩnh, có chế độ tối, chạy tốt trên điện thoại
+A Vietnamese-language catalog of **AI Skills** (`SKILL.md` packages) for Claude and other AI agents. Every entry has a description written in Vietnamese, the author's exact install command, a checked license, and a link back to the original repository.
 
-## Chạy trên máy
+*Kho Skill* means "skill warehouse" in Vietnamese. The site itself is in Vietnamese because that is its audience. This README is in English for anyone reviewing the code.
+
+> Live site: _coming soon_
+
+## Why
+
+AI skills are spreading fast, but they are scattered across hundreds of GitHub repos with English-only docs, unclear licenses and inconsistent install steps. Kho Skill gathers the useful ones in one place for Vietnamese developers and non-developers, and helps them pick the right skills for their project without searching one by one.
+
+## Features
+
+- **Catalog of 67 entries:** 19 official Anthropic skills, 46 community skills or skill collections, and 2 skills written for this project. It has accent-insensitive search (Vietnamese diacritics are optional), filters by category and source, and lets you save skills in the browser.
+- **One page per skill:** when to use it, install commands with a copy button, a plain-language license note (with a warning when a repo has no license), and GitHub stars.
+- **Project advisor (`/goi-y/`):** describe your project in free text and the site detects your needs, then recommends skills with a reason for each and one combined install command. Read [How the advisor works](#how-the-advisor-works) below.
+- **Learning page (`/skill-la-gi/`):** explains what a skill is versus project rules (`CLAUDE.md`), with two ready-to-copy rule templates (beginner and experienced).
+- **Own skills:** `session-handoff` (continue work across sessions) and `khoi-dong-du-an` (project kickoff: requirements → architecture → roadmap → build with tests, plus testing, security and deployment checklists).
+- **Machine-readable catalog:** `/skills.json` lets an AI agent read the whole catalog and choose skills by looking at a real codebase.
+- **Submit a skill (`/de-xuat/`):** validates a GitHub URL, detects duplicates, and opens a pre-filled GitHub Issue. It is enabled once `SITE_REPO` is set.
+- Dark mode, works on phones down to 320px, keyboard and screen-reader friendly (`aria-current`, `aria-pressed`, visually hidden labels).
+
+## Tech stack
+
+- **Next.js 15** (App Router) with **React 19** and **TypeScript**. The site is fully static (`output: 'export'`), with no server, database or runtime API.
+- No UI library. Plain CSS with design tokens and a dark theme.
+- Node scripts that call the GitHub REST API to find new skills and refresh star counts.
+
+## Technical highlights
+
+### How the advisor works
+
+It runs entirely in the browser, with no LLM or backend:
+
+1. **Normalization:** the text is lowercased, diacritics are stripped, and it is padded with spaces so keywords only match whole words. Uppercase `AI` maps to "artificial intelligence", while lowercase `ai` is left alone because it is a common Vietnamese pronoun ("who").
+2. **Longest phrase first:** keywords are sorted by word count, and each matched phrase is consumed. "react native" therefore counts as mobile and does not also trigger the React web need.
+3. **Weighted needs:** 33 needs, each with strong keywords (1 point) and weak keywords (0.5 point, so one vague word is not enough), plus an optional boost (for example, "new project" counts double).
+4. **Ranking:** a skill's score adds up across matched needs, weighted by its position in each need's list. Skill tags can only re-rank skills that already matched a need. They never pull in new ones, which avoids false positives such as "booking" → a calendar integration.
+5. **Shareable state:** the description and any needs the user added or removed are synced to the URL with `history.replaceState`, so other projects can deep-link into a pre-filled result.
+
+All the data is validated at build time: an unknown skill slug or a duplicate need id fails the build.
+
+### Dev-only admin tab without leaking into production
+
+The "Duyệt" (review) tab and its API are named `*.dev.tsx` / `*.dev.ts`, and `next.config.ts` only includes those extensions when running `next dev`. The static build contains no trace of them. The dev server binds to `127.0.0.1`, and `npm run dev:lan` turns the tab off when the server is exposed to the local network.
+
+### Skill discovery pipeline
+
+`scripts/discover-skills.mjs` runs 15 GitHub search queries (topics plus targeted queries for under-covered areas such as office documents, data, security and memory). It keeps repos with at least 100 stars, a license, activity in the last 12 months and a real `SKILL.md`, and it caches progress to survive rate limits. Candidates appear in the review tab. Picks are saved to `data/candidates.md`, and Claude Code adds them following the rules in `CLAUDE.md`. Nothing is added automatically.
+
+## Getting started
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000 (chỉ máy này truy cập được, có tab "Duyệt")
-npm run dev:lan  # mở cho điện thoại cùng mạng Wi-Fi để thử giao diện (tab "Duyệt" bị tắt)
-npm run build    # xuất trang tĩnh vào thư mục out/ (không có tab "Duyệt")
+npm run dev       # http://127.0.0.1:3000 (includes the review tab)
+npm run dev:lan   # expose to your LAN to test on a phone (review tab off)
+npm run build     # static site in out/
+npm run stars     # refresh GitHub star counts
+npm run discover  # search GitHub for new skill candidates
 ```
 
-Token GitHub (cho `npm run stars` và nút lấy skill mới) đặt trong file `.env` ở thư mục gốc, một dòng `GITHUB_TOKEN=...` không có khoảng trắng. File này đã nằm trong `.gitignore`.
+The GitHub scripts read an optional `GITHUB_TOKEN` from `.env`, which is git-ignored. Without a token, GitHub allows 60 requests per hour.
 
-## Deploy miễn phí lên Vercel
+## Deploy
 
-1. Đẩy thư mục này lên một repo GitHub.
-2. Vào vercel.com, chọn **Add New → Project**, chọn repo, bấm **Deploy** (Vercel tự nhận Next.js).
+The output is plain static files, so any static host works. On Vercel, import the repo and click Deploy (Next.js is detected automatically). To enable the "submit a skill" page, set `SITE_REPO` in `src/data/site.ts` to `owner/repo`.
 
-## Chọn skill cho dự án (trang /goi-y/)
+## Project structure
 
-Trang `/goi-y/`: người dùng mô tả dự án (ví dụ "trang admin quản lý bán hàng bằng React, có đăng nhập, biểu đồ, xuất Excel"), trang nhận ra các nhu cầu và gợi ý skill nên cài kèm lý do, nút chép lệnh cài gộp, và câu lệnh nhờ AI chọn kỹ hơn bằng `skills.json`. Chạy hoàn toàn trên trình duyệt, không cần máy chủ hay API.
+```
+src/
+  app/            routes: catalog, /skills/[slug], /bo-skill/[slug], /goi-y, /skill-la-gi, /de-xuat, /skills.json
+  components/     catalog, advisor, skill row, copy button, nav…
+  data/           skills.ts (catalog), needs.ts (advisor rules), collections, stars
+  lib/            recommend.ts (advisor engine), storage helpers
+public/raw/       skills and rule templates written for this project
+scripts/          GitHub discovery and star updater
+data/             reviewed candidate list
+```
 
-- Bảng nhu cầu → skill nằm trong `src/data/needs.ts`: từ khóa viết không dấu, `weak` là từ khóa yếu (chỉ tính nửa điểm), mỗi skill kèm lý do. Slug sai làm build báo lỗi.
-- Có thể dẫn link từ dự án khác sang, kết quả mở sẵn: `/goi-y/?mo-ta=<mô tả>`; thêm `&them=admin,excel` để chọn sẵn nhu cầu, `&bo=security` để bỏ nhu cầu (dùng `id` trong `needs.ts`).
+## Principles
 
-## Nút "Gửi skill" (trang /de-xuat/)
-
-Trang `/de-xuat/` cho người dùng gửi link repo skill họ biết. Trang báo ngay nếu repo đã có trong Kho Skill; nếu chưa, bấm gửi sẽ mở trang tạo **GitHub Issue** đã điền sẵn trên repo của Kho Skill.
-
-Điền repo GitHub của Kho Skill vào `SITE_REPO` trong `src/data/site.ts` (ví dụ `'ten-ban/kho-skill'`). Khi còn để trống, trang và các nút dẫn tới nó chỉ hiện lúc `npm run dev`; bản deploy ẩn hẳn.
-
-## Thêm hoặc sửa skill
-
-Toàn bộ dữ liệu nằm trong `src/data/skills.ts`. Thêm một mục mới vào mảng `SKILLS`:
-
-- `slug`: đường dẫn trang, chỉ dùng chữ thường, số và dấu gạch ngang
-- `title`, `summary`, `useWhen`: mô tả tiếng Việt, **tự viết**, không chép nguyên văn từ repo gốc
-- `license`: đọc file LICENSE của repo; không có file thì để `'none'` (trang sẽ hiện cảnh báo ⚠)
-- `install`: lấy đúng lệnh trong README của tác giả
-
-Nhớ cập nhật `CHECKED_AT` khi kiểm tra lại dữ liệu.
-
-## Thêm skill mới
-
-Việc tìm và duyệt skill mới làm trong tab **Duyệt** của chính trang Kho Skill khi chạy trên máy. Tab này **chỉ có khi `npm run dev`**: bản build để deploy không chứa tab, API hay đoạn mã nào của nó. Không có gì được tự thêm vào trang.
-
-1. Chạy `npm run dev`, mở http://localhost:3000, bấm tab **Duyệt**.
-2. Bấm **🔍 Lấy skill mới**: tìm repo trên GitHub (chạy `scripts/discover-skills.mjs`), có nhật ký tiến trình, xong thì danh sách tự tải lại.
-   - Tìm bằng các truy vấn trong `QUERIES` đầu file script: nhóm chung (topic `claude-skills`, `agent-skills`…) và nhóm nhắm vào chủ đề còn ít skill (văn phòng, dữ liệu, bảo mật, trí nhớ). Muốn tìm thêm chủ đề nào thì thêm một dòng truy vấn vào đó.
-   - Chỉ giữ repo có ≥ 100 sao, có license, cập nhật trong 12 tháng, có file `SKILL.md` và chưa có trong Kho Skill.
-   - Nhãn **Phần mềm kèm skill** là gợi ý tự động: repo sản phẩm có kèm SKILL.md, không phải bộ skill dùng chung, nên xem kỹ.
-   - Không có token thì GitHub chỉ cho 60 lượt gọi/giờ; hết lượt giữa chừng thì bấm lại sau, phần đã quét được giữ trong `data/discover-cache.json`.
-3. Bấm **Chọn** ở repo muốn thêm (mở "Xem skill" để đọc mô tả gốc). Lựa chọn lưu ngay vào `data/candidates.md` (dòng đổi `[ ]` thành `[x]`) và được giữ lại khi lấy danh sách mới.
-4. Bấm **Sao chép lệnh cho Claude Code** rồi dán vào Claude Code:
-
-   > Thêm các skill được đánh dấu [x] trong data/candidates.md vào src/data/skills.ts
-
-5. Kiểm tra trên http://localhost:3000, rồi deploy như bình thường.
-
-Chạy bằng dòng lệnh vẫn được: `npm run discover` tạo `data/candidates.md`, sửa tay `[ ]` thành `[x]` ở dòng muốn thêm.
-
-### Quy tắc khi thêm skill từ danh sách đã duyệt
-
-Claude Code tự đọc các quy tắc này trong `CLAUDE.md`. Nếu thêm tay, làm theo đúng các bước:
-
-1. Đọc `SKILL.md` gốc và README của repo. **Tự viết** `title`, `summary`, `useWhen` bằng tiếng Việt, không dịch nguyên văn.
-2. `install`: lấy đúng lệnh cài trong README. Nếu README không có lệnh cài rõ ràng thì dùng cách cài thủ công:
-
-   ```bash
-   git clone https://github.com/<owner>/<repo>.git
-   cp -r <repo>/<đường-dẫn-thư-mục-skill> ~/.claude/skills/
-   ```
-
-3. `category`: chọn một nhóm có sẵn trong `CATEGORIES`. Không hợp nhóm nào thì **hỏi lại**, không tự tạo nhóm mới.
-4. `license`: lấy từ cột License. Nếu chưa có trong kiểu `License` và `LICENSE_INFO` thì thêm vào, kèm ghi chú tiếng Việt đúng nghĩa của giấy phép đó (ví dụ GPL/AGPL bắt buộc mở mã nguồn phần sửa đổi).
-5. Repo nhiều skill: đặt `path` tới thư mục skill chính, hoặc dùng `includes` và `skillCount` nếu thêm cả bộ.
-6. Cập nhật `CHECKED_AT`, rồi chạy `npm run stars` và `npm run build`; build phải không lỗi.
-
-## Nguyên tắc
-
-- Chỉ dẫn link tới mã nguồn gốc, không lưu mã nguồn của người khác.
-- Không tự nhận liên kết với Anthropic hay tác giả các skill.
+- Only links to the original source code. No third-party skill code is stored in this repo.
+- Descriptions are written from scratch in Vietnamese, not copied or machine-translated from the original.
+- Not affiliated with Anthropic or any skill author.
