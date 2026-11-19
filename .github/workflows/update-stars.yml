@@ -1,0 +1,46 @@
+# Cập nhật số sao GitHub hằng tuần (chạy scripts/update-stars.mjs) rồi commit src/data/stars.json.
+# Commit đẩy lên main sẽ làm Vercel tự deploy lại trang.
+# Chạy tay: tab Actions → "Cập nhật số sao" → Run workflow.
+name: Cập nhật số sao
+
+on:
+  schedule:
+    - cron: '0 1 * * 1' # 01:00 UTC thứ Hai = 8 giờ sáng thứ Hai giờ Việt Nam
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-stars
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Script chỉ dùng thư viện có sẵn của Node, không cần npm install.
+      # GITHUB_TOKEN là token tạm GitHub tự cấp cho mỗi lần chạy, không phải token cá nhân trong .env.
+      - name: Lấy số sao mới
+        run: node scripts/update-stars.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit nếu có thay đổi
+        run: |
+          if git diff --quiet -- src/data/stars.json; then
+            echo "Số sao không đổi, không commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/stars.json
+          git commit -m "Cập nhật số sao GitHub $(date -u +%Y-%m-%d)"
+          git push

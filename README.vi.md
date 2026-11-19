@@ -23,6 +23,12 @@ npm run build    # xuất trang tĩnh vào thư mục out/ (không có tab "Duy�
 
 Token GitHub (cho `npm run stars` và nút lấy skill mới) đặt trong file `.env` ở thư mục gốc, một dòng `GITHUB_TOKEN=...` không có khoảng trắng. File này đã nằm trong `.gitignore`.
 
+## Số sao tự cập nhật hằng tuần
+
+GitHub Action `.github/workflows/update-stars.yml` chạy 8 giờ sáng thứ Hai (giờ Việt Nam): lấy số sao mới, có thay đổi thì commit `src/data/stars.json` lên `main`, Vercel tự deploy lại. Không cần cài token: Action dùng token tạm GitHub tự cấp. Muốn chạy ngay: tab **Actions** trên GitHub → **Cập nhật số sao** → **Run workflow**.
+
+Vì máy chủ GitHub cũng commit vào `main`, nhớ `git pull` trước khi làm tiếp trên máy.
+
 ## Deploy miễn phí lên Vercel
 
 1. Đẩy thư mục này lên một repo GitHub.

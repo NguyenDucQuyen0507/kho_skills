@@ -64,6 +64,8 @@ npm run discover  # search GitHub for new skill candidates
 
 The GitHub scripts read an optional `GITHUB_TOKEN` from `.env`, which is git-ignored. Without a token, GitHub allows 60 requests per hour.
 
+Star counts also refresh automatically: the GitHub Action in `.github/workflows/update-stars.yml` runs every Monday at 01:00 UTC, commits `src/data/stars.json` when it changes, and the push triggers a Vercel redeploy. It uses the built-in workflow token, so no secret needs to be configured. Run `git pull` before working locally.
+
 ## Deploy
 
 The output is plain static files, so any static host works. On Vercel, import the repo and click Deploy (Next.js is detected automatically). To enable the "submit a skill" page, set `SITE_REPO` in `src/data/site.ts` to `owner/repo`.
