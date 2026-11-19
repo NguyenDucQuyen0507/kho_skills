@@ -1,14 +1,15 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import type { Metadata } from 'next';
 import Link from 'next/link';
+import { pageMeta } from '@/lib/seo';
 import AiPrompt from '@/components/AiPrompt';
 import CopyCode from '@/components/CopyCode';
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: 'Skill là gì? Hướng dẫn cài và tự viết skill',
   description: 'Giải thích AI Skill (SKILL.md) bằng tiếng Việt: cách hoạt động, cách cài vào Claude Code và Claude.ai, cách tự viết skill.',
-};
+  path: '/skill-la-gi/',
+});
 
 const EXAMPLE = `---
 name: bao-cao-tuan

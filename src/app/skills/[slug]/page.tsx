@@ -8,6 +8,7 @@ import { LicenseBadge, SourceBadge, StaleBadge } from '@/components/Badges';
 import DetailSaveButton from '@/components/SaveButton';
 import { LICENSE_INFO, SKILLS, categoryOf, skillUrl } from '@/data/skills';
 import { formatDate, formatStars, isSharedRepo, starsOf, timeAgo } from '@/data/stars';
+import { JsonLd, absUrl, breadcrumb, pageMeta } from '@/lib/seo';
 
 type Params = { slug: string };
 
@@ -19,7 +20,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const skill = SKILLS.find((s) => s.slug === slug);
   if (!skill) return {};
-  return { title: `${skill.title} (${skill.name})`, description: skill.summary };
+  return pageMeta({
+    title: `${skill.title} (${skill.name})`,
+    description: skill.summary,
+    path: `/skills/${skill.slug}/`,
+    image: `/skills/${skill.slug}/opengraph-image`, // tạo bởi opengraph-image.tsx cùng thư mục
+  });
 }
 
 export default async function SkillPage({ params }: { params: Promise<Params> }) {
@@ -36,8 +42,34 @@ export default async function SkillPage({ params }: { params: Promise<Params> })
     : null;
   const related = SKILLS.filter((s) => s.category === skill.category && s.slug !== skill.slug).slice(0, 4);
 
+  const pagePath = `/skills/${skill.slug}/`;
+  const source = skillUrl(skill);
+  const jsonLd = [
+    breadcrumb([
+      { name: 'Danh mục', path: '/' },
+      { name: skill.title, path: pagePath },
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareSourceCode',
+      name: skill.title,
+      alternateName: skill.name,
+      description: skill.summary,
+      url: absUrl(pagePath),
+      codeRepository: source.startsWith('http') ? source : absUrl(source),
+      inLanguage: 'vi',
+      genre: cat.label,
+      keywords: skill.tags.join(', '),
+      author: { '@type': skill.source === 'official' ? 'Organization' : 'Person', name: skill.author },
+      ...(skill.license !== 'none' && skill.license !== 'check-repo'
+        ? { license: `https://spdx.org/licenses/${skill.license}.html` }
+        : {}),
+    },
+  ];
+
   return (
     <div className="container">
+      <JsonLd data={jsonLd} />
       <nav className="breadcrumb" aria-label="Đường dẫn">
         <Link href="/">Danh mục</Link> / {cat.label}
       </nav>

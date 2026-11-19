@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import SkillList from '@/components/SkillRow';
 import { COLLECTIONS, skillsOf } from '@/data/collections';
+import { JsonLd, absUrl, breadcrumb, pageMeta } from '@/lib/seo';
 
 type Params = { slug: string };
 
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const c = COLLECTIONS.find((x) => x.slug === slug);
   if (!c) return {};
-  return { title: `Bộ skill: ${c.title}`, description: c.description };
+  return pageMeta({ title: `Bộ skill: ${c.title}`, description: c.description, path: `/bo-skill/${c.slug}/` });
 }
 
 export default async function CollectionPage({ params }: { params: Promise<Params> }) {
@@ -24,8 +25,28 @@ export default async function CollectionPage({ params }: { params: Promise<Param
   const skills = skillsOf(collection);
   const others = COLLECTIONS.filter((c) => c.slug !== slug);
 
+  const jsonLd = [
+    breadcrumb([
+      { name: 'Danh mục', path: '/' },
+      { name: `Bộ skill: ${collection.title}`, path: `/bo-skill/${collection.slug}/` },
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: `Bộ skill: ${collection.title}`,
+      description: collection.description,
+      itemListElement: skills.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: s.title,
+        url: absUrl(`/skills/${s.slug}/`),
+      })),
+    },
+  ];
+
   return (
     <div className="container">
+      <JsonLd data={jsonLd} />
       <nav className="breadcrumb" aria-label="Đường dẫn">
         <Link href="/">Danh mục</Link> / Bộ skill theo dự án
       </nav>

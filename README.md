@@ -51,6 +51,10 @@ The "Duyệt" (review) tab and its API are named `*.dev.tsx` / `*.dev.ts`, and `
 
 `scripts/discover-skills.mjs` runs 15 GitHub search queries (topics plus targeted queries for under-covered areas such as office documents, data, security and memory). It keeps repos with at least 100 stars, a license, activity in the last 12 months and a real `SKILL.md`, and it caches progress to survive rate limits. Candidates appear in the review tab. Picks are saved to `data/candidates.md`, and Claude Code adds them following the rules in `CLAUDE.md`. Nothing is added automatically.
 
+### SEO at build time
+
+`sitemap.xml`, `robots.txt`, canonical URLs, Open Graph tags and JSON-LD (`BreadcrumbList`, `SoftwareSourceCode`, `ItemList`) are all generated during the static build. Each skill page gets its own 1200×630 social preview image rendered with `next/og` and the Be Vietnam Pro font, so Vietnamese diacritics display correctly.
+
 ## Getting started
 
 ```bash

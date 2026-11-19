@@ -2,17 +2,19 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CHECKED_AT } from '@/data/skills';
 import NavLinks from '@/components/NavLinks';
-import { SUGGEST_ENABLED } from '@/data/site';
+import { SITE_URL, SUGGEST_ENABLED } from '@/data/site';
 import { STARS_FETCHED_AT, formatDate } from '@/data/stars';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Kho Skill: danh mục AI Skills tiếng Việt',
     template: '%s · Kho Skill',
   },
   description:
     'Danh mục AI Skills (SKILL.md) cho Claude và các AI agent, mô tả bằng tiếng Việt, kèm cách cài và giấy phép đã kiểm tra.',
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,12 +1,13 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import SuggestForm from '@/components/SuggestForm';
 import { SUGGEST_ENABLED } from '@/data/site';
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: 'Gửi skill',
   description: 'Gửi skill hay mà Kho Skill chưa có. Mỗi đề xuất được kiểm tra trước khi thêm vào danh mục.',
-};
+  path: '/de-xuat/',
+});
 
 export default function SuggestPage() {
   if (!SUGGEST_ENABLED) notFound();

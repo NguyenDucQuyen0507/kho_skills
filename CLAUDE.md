@@ -26,3 +26,4 @@ Khi được nhờ "thêm các skill được đánh dấu [x] trong data/candid
 - Không đổi nội dung mô tả skill đã có trong `src/data/skills.ts` nếu không được yêu cầu.
 - Giao diện chỉ dùng biến màu có sẵn trong `src/app/globals.css`, không thêm mã màu mới.
 - Chỉ dẫn link tới mã nguồn gốc, không lưu mã nguồn skill của người khác trong repo.
+- Trang mới: khai báo metadata bằng `pageMeta()` trong `src/lib/seo.tsx` (có canonical và ảnh xem trước) và thêm đường dẫn vào `src/app/sitemap.ts`.

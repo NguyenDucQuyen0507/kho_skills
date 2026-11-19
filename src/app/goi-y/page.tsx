@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import ProjectAdvisor from '@/components/ProjectAdvisor';
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: 'Chọn skill cho dự án',
   description: 'Mô tả dự án bạn đang làm, Kho Skill gợi ý những AI skill nên cài kèm lý do và lệnh cài, không phải tự tìm từng skill.',
-};
+  path: '/goi-y/',
+});
 
 export default function SuggestForProjectPage() {
   return (

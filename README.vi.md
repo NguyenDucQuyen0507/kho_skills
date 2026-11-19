@@ -34,6 +34,13 @@ Vì máy chủ GitHub cũng commit vào `main`, nhớ `git pull` trước khi l�
 1. Đẩy thư mục này lên một repo GitHub.
 2. Vào vercel.com, chọn **Add New → Project**, chọn repo, bấm **Deploy** (Vercel tự nhận Next.js).
 
+## SEO
+
+- `/sitemap.xml` và `/robots.txt` tạo lúc build (`src/app/sitemap.ts`, `src/app/robots.ts`).
+- Mỗi trang có canonical và thẻ Open Graph qua `pageMeta()` trong `src/lib/seo.tsx`; trang skill và bộ skill có dữ liệu có cấu trúc JSON-LD.
+- Ảnh xem trước khi chia sẻ link: ảnh chung (`src/app/opengraph-image.tsx`) và mỗi skill một ảnh (`src/app/skills/[slug]/opengraph-image.tsx`), font Be Vietnam Pro (OFL) trong `src/assets/fonts`.
+- Đổi tên miền: sửa `SITE_URL` trong `src/data/site.ts`.
+
 ## Chọn skill cho dự án (trang /goi-y/)
 
 Trang `/goi-y/`: người dùng mô tả dự án (ví dụ "trang admin quản lý bán hàng bằng React, có đăng nhập, biểu đồ, xuất Excel"), trang nhận ra các nhu cầu và gợi ý skill nên cài kèm lý do, nút chép lệnh cài gộp, và câu lệnh nhờ AI chọn kỹ hơn bằng `skills.json`. Chạy hoàn toàn trên trình duyệt, không cần máy chủ hay API.
